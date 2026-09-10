@@ -27,47 +27,73 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 
 // =========================
-// Add Task
+// Add / Update Task
 // =========================
 
 btn.addEventListener("click", function () {
 
+    // Empty task check
     if (inp.value.trim() === "") {
+
         alert("Please enter a task");
+
         return;
     }
 
 
-    // Agar update mode hai
+    // =========================
+    // Update Existing Task
+    // =========================
+
     if (update) {
 
-        update.querySelector(".task-title").textContent = inp.value;
+        let id = Number(update.dataset.id);
 
-        update.querySelector(".task-description").textContent =
-            description.value;
 
-        update.querySelector(".category").textContent =
-            category.value;
+        tasks.forEach(function (task) {
 
-        update.querySelector(".priority").textContent =
-            priority.value;
+            if (task.id === id) {
 
-        update.querySelector(".due-date").textContent =
-            dueDate.value;
+                task.title = inp.value;
 
+                task.description = description.value;
+
+                task.category = category.value;
+
+                task.priority = priority.value;
+
+                task.dueDate = dueDate.value;
+
+            }
+
+        });
+
+
+        saveTasks();
+
+        showTasks();
+
+
+        // Update mode khatam
         update = null;
 
         btn.innerText = "Add Task";
 
+
+        // Inputs clear
         inp.value = "";
+
         description.value = "";
+
         dueDate.value = "";
 
         return;
     }
 
 
-    // New Task Object
+    // =========================
+    // Create New Task
+    // =========================
 
     let task = {
 
@@ -88,17 +114,23 @@ btn.addEventListener("click", function () {
     };
 
 
+    // Task array mein add
     tasks.push(task);
 
+
+    // LocalStorage mein save
     saveTasks();
 
+
+    // Screen par show
     showTasks();
 
 
-    // Clear Inputs
-
+    // Inputs clear
     inp.value = "";
+
     description.value = "";
+
     dueDate.value = "";
 
 });
@@ -122,41 +154,65 @@ function showTasks() {
 
     tasks.forEach(function (task) {
 
+
+        // =========================
         // Search
+        // =========================
+
         if (!task.title.toLowerCase().includes(searchValue)) {
+
             return;
+
         }
 
 
+        // =========================
         // Status Filter
+        // =========================
+
         if (
             statusValue !== "All" &&
             task.status !== statusValue
         ) {
+
             return;
+
         }
 
 
+        // =========================
         // Priority Filter
+        // =========================
+
         if (
             priorityValue !== "All" &&
             task.priority !== priorityValue
         ) {
+
             return;
+
         }
 
 
-        // LI
+        // =========================
+        // Create LI
+        // =========================
 
         let li = document.createElement("li");
 
+        li.dataset.id = task.id;
 
+
+        // =========================
         // Task Information
+        // =========================
 
         let taskInfo = document.createElement("div");
 
         taskInfo.classList.add("task-info");
 
+
+        // Title
 
         let title = document.createElement("div");
 
@@ -165,12 +221,18 @@ function showTasks() {
         title.innerText = task.title;
 
 
+        // Description
+
         let desc = document.createElement("div");
 
         desc.classList.add("task-description");
 
         desc.innerText = task.description;
 
+
+        // =========================
+        // Details
+        // =========================
 
         let details = document.createElement("div");
 
@@ -196,63 +258,83 @@ function showTasks() {
         `;
 
 
+        // =========================
         // Status
+        // =========================
 
         let status = document.createElement("span");
 
         status.classList.add("status");
 
+
         if (task.status === "Pending") {
 
             status.classList.add("pending");
 
-        } else if (task.status === "In Progress") {
+        }
+
+        else if (task.status === "In Progress") {
 
             status.classList.add("in-progress");
 
-        } else {
+        }
+
+        else {
 
             status.classList.add("completed-status");
 
         }
 
+
         status.innerText = task.status;
 
 
+        // =========================
         // Update Button
+        // =========================
 
         let updateBtn = document.createElement("button");
 
-        updateBtn.innerText = "Update";
+        updateBtn.innerHTML =
+            `<i class="fa-solid fa-pen"></i> Update`;
 
         updateBtn.classList.add("update");
 
 
+        // =========================
         // Delete Button
+        // =========================
 
         let delBtn = document.createElement("button");
 
-        delBtn.innerText = "Delete";
+        delBtn.innerHTML =
+            `<i class="fa-solid fa-trash"></i> Delete`;
 
         delBtn.classList.add("delete");
 
 
+        // =========================
         // Complete Button
+        // =========================
 
         let completeBtn = document.createElement("button");
 
-        completeBtn.innerText = "Complete";
+        completeBtn.innerHTML =
+            `<i class="fa-solid fa-check"></i> Complete`;
 
         completeBtn.classList.add("complete");
 
 
-        // Append
+        // =========================
+        // Append Elements
+        // =========================
 
         taskInfo.appendChild(title);
 
         taskInfo.appendChild(desc);
 
         taskInfo.appendChild(details);
+
 
         li.appendChild(taskInfo);
 
@@ -264,16 +346,13 @@ function showTasks() {
 
         li.appendChild(updateBtn);
 
+
         ul.appendChild(li);
-
-
-        // Task ID save karna
-
-        li.dataset.id = task.id;
 
     });
 
 
+    // Counters update
     updateCounters();
 
 }
@@ -285,23 +364,39 @@ function showTasks() {
 
 ul.addEventListener("click", function (event) {
 
-    if (event.target.nodeName === "BUTTON") {
+
+    // Button ya button ke andar icon click hua
+    if (
+        event.target.tagName === "BUTTON" ||
+        event.target.parentElement.tagName === "BUTTON"
+    ) {
 
 
-        let listItems = event.target.parentElement;
+        // Actual button find karo
+        let button = event.target.closest("button");
 
+
+        // Button ka parent LI
+        let listItems = button.parentElement;
+
+
+        // Task ID
         let id = Number(listItems.dataset.id);
 
 
+        // =========================
         // Delete
+        // =========================
 
-        if (event.target.innerText === "Delete") {
+        if (button.classList.contains("delete")) {
+
 
             tasks = tasks.filter(function (task) {
 
                 return task.id !== id;
 
             });
+
 
             saveTasks();
 
@@ -310,41 +405,77 @@ ul.addEventListener("click", function (event) {
         }
 
 
+        // =========================
         // Update
+        // =========================
 
-        if (event.target.innerText === "Update") {
+        if (button.classList.contains("update")) {
+
 
             update = listItems;
 
 
             inp.value =
-                listItems.querySelector(".task-title").textContent;
+                listItems
+                    .querySelector(".task-title")
+                    .textContent
+                    .trim();
 
 
             description.value =
-                listItems.querySelector(".task-description").textContent;
+                listItems
+                    .querySelector(".task-description")
+                    .textContent
+                    .trim();
 
 
             category.value =
-                listItems.querySelector(".category").textContent;
+                listItems
+                    .querySelector(".category")
+                    .textContent
+                    .trim();
 
 
             priority.value =
-                listItems.querySelector(".priority").textContent;
+                listItems
+                    .querySelector(".priority")
+                    .textContent
+                    .trim();
 
 
-            dueDate.value =
-                listItems.querySelector(".due-date").textContent;
+            let dateValue =
+                listItems
+                    .querySelector(".due-date")
+                    .textContent
+                    .trim();
 
 
+            // Agar date hai to input mein set karo
+            if (dateValue !== "No Date") {
+
+                dueDate.value = dateValue;
+
+            }
+
+            else {
+
+                dueDate.value = "";
+
+            }
+
+
+            // Button text change
             btn.innerText = "Update";
 
         }
 
 
+        // =========================
         // Complete
+        // =========================
 
-        if (event.target.innerText === "Complete") {
+        if (button.classList.contains("complete")) {
+
 
             tasks.forEach(function (task) {
 
@@ -355,6 +486,7 @@ ul.addEventListener("click", function (event) {
                 }
 
             });
+
 
             saveTasks();
 
@@ -401,13 +533,18 @@ priorityFilter.addEventListener("change", function () {
 
 
 // =========================
-// Counters
+// Update Counters
 // =========================
 
 function updateCounters() {
 
+
+    // Total Tasks
+
     total.innerText = tasks.length;
 
+
+    // Pending Tasks
 
     let pendingTasks = tasks.filter(function (task) {
 
@@ -418,6 +555,8 @@ function updateCounters() {
     pending.innerText = pendingTasks.length;
 
 
+    // In Progress Tasks
+
     let progressTasks = tasks.filter(function (task) {
 
         return task.status === "In Progress";
@@ -426,6 +565,8 @@ function updateCounters() {
 
     progress.innerText = progressTasks.length;
 
+
+    // Completed Tasks
 
     let completedTasks = tasks.filter(function (task) {
 
@@ -457,3 +598,4 @@ function saveTasks() {
 // =========================
 
 showTasks();
+
