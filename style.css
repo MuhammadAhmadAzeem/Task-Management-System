@@ -1,0 +1,403 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+
+    /* Purple gradient background */
+    background: linear-gradient(
+        135deg,
+        #160b2e,
+        #241044,
+        #3b176d,
+        #171122
+    );
+
+    min-height: 100vh;
+    color: #f5f3ff;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+
+    background: linear-gradient(
+        90deg,
+        #c084fc,
+        #a855f7,
+        #e879f9
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================
+   Add Section
+========================= */
+
+.add-section {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 14px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(12px);
+}
+
+input,
+select {
+    padding: 12px 14px;
+
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+
+    outline: none;
+}
+
+input::placeholder {
+    color: #b8adc9;
+}
+
+input:focus,
+select:focus {
+    border-color: #a855f7;
+
+    box-shadow:
+        0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+
+select option {
+    background: #241044;
+    color: white;
+}
+
+#addTask {
+    flex: 1;
+    min-width: 200px;
+}
+
+#description {
+    flex: 1;
+    min-width: 200px;
+}
+
+
+/* =========================
+   Add Button
+========================= */
+
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+#addBtn {
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #a855f7
+    );
+}
+
+#addBtn:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 20px rgba(168, 85, 247, 0.35);
+}
+
+
+/* =========================
+   Search & Filters
+========================= */
+
+.controls {
+    margin: 25px 0;
+
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#search {
+    flex: 1;
+    min-width: 250px;
+}
+
+
+/* =========================
+   Counters
+========================= */
+
+.counters {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.box {
+    background: rgba(255, 255, 255, 0.08);
+
+    padding: 20px;
+
+    text-align: center;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(10px);
+}
+
+.box h3 {
+    font-size: 15px;
+    color: #cfc5df;
+
+    margin-bottom: 10px;
+}
+
+.box p {
+    font-size: 30px;
+
+    font-weight: bold;
+
+    color: #c084fc;
+}
+
+
+/* =========================
+   Task List
+========================= */
+
+li {
+    list-style: none;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    margin-bottom: 12px;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(10px);
+
+    transition: 0.2s;
+}
+
+li:hover {
+    border-color: rgba(168, 85, 247, 0.45);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   Task Information
+========================= */
+
+.task-info {
+    flex: 1;
+}
+
+.task-title {
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #ffffff;
+
+    margin-bottom: 6px;
+}
+
+.task-description {
+    color: #bfb4ce;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+.task-details {
+    font-size: 13px;
+
+    color: #958aa5;
+}
+
+
+/* =========================
+   Status
+========================= */
+
+.status {
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.pending {
+    background: rgba(250, 204, 21, 0.15);
+    color: #facc15;
+}
+
+.in-progress {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+}
+
+.completed-status {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+}
+
+
+/* =========================
+   Priority
+========================= */
+
+.high {
+    color: #f87171;
+    font-weight: bold;
+}
+
+.medium {
+    color: #fbbf24;
+    font-weight: bold;
+}
+
+.low {
+    color: #34d399;
+    font-weight: bold;
+}
+
+
+/* =========================
+   Task Buttons
+========================= */
+
+.update {
+    background: linear-gradient(
+        135deg,
+        #9333ea,
+        #c084fc
+    );
+
+    color: white;
+}
+
+.update:hover {
+    box-shadow:
+        0 5px 15px rgba(147, 51, 234, 0.35);
+}
+
+.delete {
+    background: #dc2626;
+    color: white;
+}
+
+.delete:hover {
+    background: #ef4444;
+}
+
+.complete {
+    background: #059669;
+    color: white;
+}
+
+.complete:hover {
+    background: #10b981;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 700px) {
+
+    .counters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    li {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .counters {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    li {
+        align-items: flex-start;
+    }
+
+}
+
