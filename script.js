@@ -18,11 +18,9 @@ let progress = document.querySelector("#progress");
 let completed = document.querySelector("#completed");
 
 
-// Update ke liye variable
+
 let update = null;
 
-
-// Tasks array
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 
@@ -73,8 +71,6 @@ btn.addEventListener("click", function () {
 
         showTasks();
 
-
-        // Update mode khatam
         update = null;
 
         btn.innerText = "Add Task";
@@ -114,15 +110,13 @@ btn.addEventListener("click", function () {
     };
 
 
-    // Task array mein add
+    
     tasks.push(task);
 
 
-    // LocalStorage mein save
+    
     saveTasks();
 
-
-    // Screen par show
     showTasks();
 
 
