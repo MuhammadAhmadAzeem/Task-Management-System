@@ -86,6 +86,8 @@ This project was created to practice JavaScript concepts such as:
 
 **Muhammad Ahmad Azeem**
 
+*Software Engineer | Full Stack Developer*
+
 ## 📄 License
 
 This project is created for learning and portfolio purposes.
